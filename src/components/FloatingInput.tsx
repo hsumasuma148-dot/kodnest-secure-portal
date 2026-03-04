@@ -37,7 +37,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="peer w-full bg-transparent px-4 pt-5 pb-2 text-foreground text-sm outline-none rounded-xl"
+          className="peer w-full bg-transparent px-4 pt-5 pb-2 text-foreground text-base font-medium outline-none rounded-xl caret-primary"
         />
         <label
           className={cn(
