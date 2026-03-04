@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FloatingInput from "@/components/FloatingInput";
 import BankLogo from "@/components/BankLogo";
 import GlassBackground from "@/components/GlassBackground";
@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 const Register: React.FC = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -26,6 +27,7 @@ const Register: React.FC = () => {
     setErrors(v);
     if (Object.keys(v).length === 0) {
       toast.success("Account created successfully!");
+      navigate("/dashboard");
     }
   };
 
