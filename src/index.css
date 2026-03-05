@@ -6,53 +6,47 @@
 
 @layer base {
   :root {
-    --background: 260 20% 10%;
-    --foreground: 0 0% 98%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
 
-    --card: 260 20% 14%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 260 20% 14%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 280 80% 65%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 260 30% 20%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 260 20% 18%;
-    --muted-foreground: 260 10% 60%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 320 80% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 260 20% 22%;
-    --input: 260 20% 22%;
-    --ring: 280 80% 65%;
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
-    /* Banking glassmorphism tokens */
-    --glass-bg: 260 20% 100% / 0.08;
-    --glass-border: 260 20% 100% / 0.15;
-    --glass-shadow: 0 8px 32px 0 hsla(260, 20%, 0%, 0.37);
-    --gradient-start: 280 80% 55%;
-    --gradient-end: 320 80% 55%;
-    --glow-primary: 280 80% 65%;
-    --glow-accent: 320 80% 60%;
-
-    --sidebar-background: 260 20% 10%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 280 80% 65%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 221 83% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 260 30% 20%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 260 20% 22%;
-    --sidebar-ring: 280 80% 65%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 221 83% 53%;
   }
 }
 
@@ -69,44 +63,44 @@
 
 @layer utilities {
   .glass-card {
-    background: hsla(var(--glass-bg));
+    background: hsla(0, 0%, 100%, 0.08);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid hsla(var(--glass-border));
-    box-shadow: var(--glass-shadow);
+    border: 1px solid hsla(0, 0%, 100%, 0.15);
+    box-shadow: 0 8px 32px 0 hsla(0, 0%, 0%, 0.1);
   }
 
   .gradient-bg {
     background: linear-gradient(
       135deg,
-      hsl(var(--gradient-start)) 0%,
-      hsl(280, 60%, 30%) 30%,
-      hsl(300, 70%, 35%) 60%,
-      hsl(var(--gradient-end)) 100%
+      hsl(221, 83%, 53%) 0%,
+      hsl(240, 60%, 40%) 30%,
+      hsl(280, 70%, 45%) 60%,
+      hsl(320, 80%, 55%) 100%
     );
     background-size: 400% 400%;
     animation: gradient-shift 12s ease infinite;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(160, 84%, 39%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .input-glow:focus-within {
-    box-shadow: 0 0 0 2px hsla(var(--glow-primary) / 0.4), 0 0 20px hsla(var(--glow-primary) / 0.15);
+    box-shadow: 0 0 0 2px hsla(221, 83%, 53%, 0.4), 0 0 20px hsla(221, 83%, 53%, 0.15);
   }
 
   .btn-glow {
-    background: linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)));
-    box-shadow: 0 4px 15px hsla(var(--glow-primary) / 0.4);
+    background: linear-gradient(135deg, hsl(221, 83%, 53%), hsl(240, 70%, 50%));
+    box-shadow: 0 4px 15px hsla(221, 83%, 53%, 0.4);
     transition: all 0.3s ease;
   }
 
   .btn-glow:hover {
-    box-shadow: 0 6px 25px hsla(var(--glow-primary) / 0.6);
+    box-shadow: 0 6px 25px hsla(221, 83%, 53%, 0.6);
     transform: translateY(-1px);
   }
 
@@ -116,6 +110,20 @@
 
   .font-display {
     font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .fintech-card {
+    @apply bg-card rounded-2xl border border-border p-6;
+    box-shadow: 0 1px 3px 0 hsla(0, 0%, 0%, 0.06), 0 1px 2px -1px hsla(0, 0%, 0%, 0.06);
+  }
+
+  .fintech-card-hover {
+    @apply fintech-card transition-all duration-200;
+  }
+
+  .fintech-card-hover:hover {
+    box-shadow: 0 4px 12px 0 hsla(0, 0%, 0%, 0.08), 0 2px 4px -1px hsla(0, 0%, 0%, 0.06);
+    transform: translateY(-1px);
   }
 }
 

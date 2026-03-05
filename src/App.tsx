@@ -6,7 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import SendMoney from "./pages/SendMoney";
+import Transactions from "./pages/Transactions";
+import Cards from "./pages/Cards";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -19,6 +24,10 @@ const App = () => (
           <Route path="/" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/send-money" element={<SendMoney />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/cards" element={<Cards />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
