@@ -1,82 +1,132 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import GlassBackground from "@/components/GlassBackground";
-import BankLogo from "@/components/BankLogo";
-import TransactionHistory from "@/components/TransactionHistory";
-import AIChatWidget from "@/components/AIChatWidget";
-import { LogOut, Wallet, TrendingUp, TrendingDown, CreditCard } from "lucide-react";
+import DashboardLayout from "@/components/DashboardLayout";
+import { useTransactions } from "@/context/TransactionContext";
+import { Wallet, TrendingUp, TrendingDown, SendHorizontal, Receipt, Landmark, CreditCard, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { transactions, totalBalance, totalIncome, totalExpenses } = useTransactions();
 
-  const handleLogout = () => {
-    navigate("/login");
-  };
+  const quickActions = [
+    { label: "Send Money", icon: SendHorizontal, path: "/send-money" },
+    { label: "Pay Bills", icon: Receipt, path: "/send-money" },
+    { label: "Deposit", icon: Landmark, path: "/dashboard" },
+    { label: "Cards", icon: CreditCard, path: "/cards" },
+  ];
+
+  const recentTransactions = transactions.slice(0, 5);
 
   return (
-    <GlassBackground>
-      <div className="w-full max-w-4xl animate-fade-in px-4 py-8 space-y-6">
-        {/* Header */}
-        <div className="glass-card rounded-2xl p-6 flex items-center justify-between">
-          <BankLogo />
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
+    <div className="space-y-6 animate-fade-in max-w-5xl">
+      {/* Welcome */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, User 👋</h2>
+          <p className="text-sm text-muted-foreground">Here's your financial overview</p>
         </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="glass-card rounded-2xl p-5 space-y-2">
-            <div className="flex items-center gap-2 text-muted-foreground text-sm">
-              <Wallet className="w-4 h-4" />
-              Total Balance
-            </div>
-            <p className="text-2xl font-bold font-display gradient-text">₹4,52,830.00</p>
-          </div>
-          <div className="glass-card rounded-2xl p-5 space-y-2">
-            <div className="flex items-center gap-2 text-sm" style={{ color: "hsl(142, 71%, 45%)" }}>
-              <TrendingUp className="w-4 h-4" />
-              Income
-            </div>
-            <p className="text-2xl font-bold font-display text-foreground">₹1,25,000.00</p>
-          </div>
-          <div className="glass-card rounded-2xl p-5 space-y-2">
-            <div className="flex items-center gap-2 text-sm text-destructive">
-              <TrendingDown className="w-4 h-4" />
-              Expenses
-            </div>
-            <p className="text-2xl font-bold font-display text-foreground">₹32,450.00</p>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="glass-card rounded-2xl p-6 space-y-4">
-          <h3 className="text-lg font-semibold font-display text-foreground">Quick Actions</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {["Send Money", "Pay Bills", "Deposit", "Cards"].map((action) => (
-              <button
-                key={action}
-                className="glass-card rounded-xl p-4 text-center hover:border-primary/40 transition-all text-sm font-medium text-foreground flex flex-col items-center gap-2"
-              >
-                <CreditCard className="w-5 h-5 text-primary" />
-                {action}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Transaction History */}
-        <TransactionHistory />
       </div>
 
-      {/* AI Chat Widget */}
-      <AIChatWidget />
-    </GlassBackground>
+      {/* Balance Hero Card */}
+      <div className="rounded-2xl bg-primary p-6 text-primary-foreground">
+        <p className="text-sm opacity-80">Total Balance</p>
+        <p className="text-4xl font-bold font-display mt-1">₹{totalBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</p>
+        <div className="flex gap-6 mt-4">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-4 h-4" />
+            <span className="text-sm">Income: ₹{totalIncome.toLocaleString("en-IN")}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <TrendingDown className="w-4 h-4" />
+            <span className="text-sm">Expenses: ₹{totalExpenses.toLocaleString("en-IN")}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="fintech-card">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm mb-2">
+            <Wallet className="w-4 h-4" />
+            Total Balance
+          </div>
+          <p className="text-2xl font-bold font-display text-foreground">₹{totalBalance.toLocaleString("en-IN")}</p>
+        </div>
+        <div className="fintech-card">
+          <div className="flex items-center gap-2 text-sm mb-2 text-success">
+            <TrendingUp className="w-4 h-4" />
+            Income
+          </div>
+          <p className="text-2xl font-bold font-display text-foreground">₹{totalIncome.toLocaleString("en-IN")}</p>
+        </div>
+        <div className="fintech-card">
+          <div className="flex items-center gap-2 text-sm mb-2 text-destructive">
+            <TrendingDown className="w-4 h-4" />
+            Expenses
+          </div>
+          <p className="text-2xl font-bold font-display text-foreground">₹{totalExpenses.toLocaleString("en-IN")}</p>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="fintech-card">
+        <h3 className="text-base font-semibold text-foreground mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {quickActions.map((action) => (
+            <button
+              key={action.label}
+              onClick={() => navigate(action.path)}
+              className="fintech-card-hover flex flex-col items-center gap-3 p-4 cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <action.icon className="w-5 h-5 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-foreground">{action.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Recent Transactions */}
+      <div className="fintech-card">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-semibold text-foreground">Recent Transactions</h3>
+          <button onClick={() => navigate("/transactions")} className="text-sm text-primary hover:underline font-medium">
+            View All
+          </button>
+        </div>
+        <div className="space-y-1">
+          {recentTransactions.map((tx) => (
+            <div key={tx.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-accent transition-colors">
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  tx.type === "credit" ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"
+                }`}>
+                  {tx.type === "credit" ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{tx.name}</p>
+                  <p className="text-xs text-muted-foreground">{tx.category} • {tx.date}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className={`text-sm font-semibold ${tx.type === "credit" ? "text-success" : "text-destructive"}`}>
+                  {tx.type === "credit" ? "+" : "-"}₹{tx.amount.toLocaleString("en-IN")}
+                </span>
+                <p className="text-xs text-muted-foreground capitalize">{tx.status}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Dashboard;
+const DashboardPage = () => (
+  <DashboardLayout title="Dashboard">
+    <Dashboard />
+  </DashboardLayout>
+);
+
+export default DashboardPage;
