@@ -1,6 +1,6 @@
-import { LayoutDashboard, SendHorizontal, ArrowLeftRight, CreditCard, Settings, LogOut, Landmark, Receipt } from "lucide-react";
+import { LayoutDashboard, SendHorizontal, ArrowLeftRight, CreditCard, Settings, LogOut, Landmark, Receipt, Smartphone, ScanLine, BarChart3, User } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -17,10 +17,14 @@ import {
 const menuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Send Money", url: "/send-money", icon: SendHorizontal },
+  { title: "UPI Pay", url: "/upi-payment", icon: Smartphone },
+  { title: "Scan & Pay", url: "/scan-pay", icon: ScanLine },
   { title: "Deposit", url: "/deposit", icon: Landmark },
   { title: "Pay Bills", url: "/pay-bills", icon: Receipt },
   { title: "Transactions", url: "/transactions", icon: ArrowLeftRight },
+  { title: "Analytics", url: "/analytics", icon: BarChart3 },
   { title: "Cards", url: "/cards", icon: CreditCard },
+  { title: "Profile", url: "/profile", icon: User },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 

@@ -3,6 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import AIChatWidget from "@/components/AIChatWidget";
 import ThemeToggle from "@/components/ThemeToggle";
+import NotificationBell from "@/components/NotificationBell";
 
 interface Props {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const DashboardLayout: React.FC<Props> = ({ children, title }) => {
           <header className="h-16 flex items-center gap-4 border-b border-border bg-card px-6 transition-colors duration-300">
             <SidebarTrigger className="text-muted-foreground" />
             <h1 className="text-lg font-semibold font-display text-foreground flex-1">{title}</h1>
+            <NotificationBell />
             <ThemeToggle />
           </header>
           <main className="flex-1 p-6 overflow-auto">
