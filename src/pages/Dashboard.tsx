@@ -10,8 +10,8 @@ const Dashboard: React.FC = () => {
 
   const quickActions = [
     { label: "Send Money", icon: SendHorizontal, path: "/send-money" },
-    { label: "Pay Bills", icon: Receipt, path: "/send-money" },
-    { label: "Deposit", icon: Landmark, path: "/dashboard" },
+    { label: "Pay Bills", icon: Receipt, path: "/pay-bills" },
+    { label: "Deposit", icon: Landmark, path: "/deposit" },
     { label: "Cards", icon: CreditCard, path: "/cards" },
   ];
 
