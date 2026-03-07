@@ -4,24 +4,23 @@ import SecurityPinModal from "@/components/SecurityPinModal";
 import { useTransactions } from "@/context/TransactionContext";
 import { useNotifications } from "@/context/NotificationContext";
 import { toast } from "sonner";
-import { SendHorizontal, User, Hash, IndianRupee, FileText } from "lucide-react";
+import { Smartphone, AtSign, IndianRupee } from "lucide-react";
 
-const SendMoneyContent: React.FC = () => {
+const UpiPaymentContent: React.FC = () => {
   const { addTransaction } = useTransactions();
   const { addNotification } = useNotifications();
-  const [form, setForm] = useState({ recipient: "", accountNumber: "", amount: "", description: "" });
+  const [form, setForm] = useState({ upiId: "", amount: "", note: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showPin, setShowPin] = useState(false);
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!form.recipient.trim()) e.recipient = "Recipient name is required";
-    if (!form.accountNumber.trim()) e.accountNumber = "Account number is required";
+    if (!form.upiId.trim() || !form.upiId.includes("@")) e.upiId = "Enter a valid UPI ID (e.g. user@upi)";
     if (!form.amount || isNaN(Number(form.amount)) || Number(form.amount) <= 0) e.amount = "Enter a valid amount";
     return e;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePay = (e: React.FormEvent) => {
     e.preventDefault();
     const v = validate();
     setErrors(v);
@@ -32,28 +31,27 @@ const SendMoneyContent: React.FC = () => {
   const confirmPayment = () => {
     const amt = Number(form.amount);
     addTransaction({
-      name: `Transfer to ${form.recipient}`,
+      name: `UPI Payment to ${form.upiId}`,
       type: "debit",
       amount: amt,
       date: new Date().toISOString().split("T")[0],
-      category: "Transfer",
+      category: "UPI",
       status: "completed",
-      recipient: form.recipient,
-      accountNumber: form.accountNumber,
-      description: form.description,
+      recipient: form.upiId,
+      description: form.note,
     });
     addNotification({
-      title: "Money Sent",
-      message: `₹${amt.toLocaleString("en-IN")} sent to ${form.recipient}`,
+      title: "Payment Successful",
+      message: `₹${amt.toLocaleString("en-IN")} paid to ${form.upiId}`,
       type: "success",
       time: new Date().toLocaleString("en-IN"),
     });
-    toast.success(`₹${amt.toLocaleString("en-IN")} sent to ${form.recipient}`);
-    setForm({ recipient: "", accountNumber: "", amount: "", description: "" });
+    toast.success(`₹${amt.toLocaleString("en-IN")} paid to ${form.upiId}`);
+    setForm({ upiId: "", amount: "", note: "" });
     setShowPin(false);
   };
 
-  const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((p) => ({ ...p, [key]: e.target.value }));
 
   return (
@@ -61,30 +59,22 @@ const SendMoneyContent: React.FC = () => {
       <div className="fintech-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <SendHorizontal className="w-6 h-6 text-primary" />
+            <Smartphone className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Send Money</h2>
-            <p className="text-sm text-muted-foreground">Transfer funds to any account</p>
+            <h2 className="text-lg font-semibold text-foreground">Pay via UPI</h2>
+            <p className="text-sm text-muted-foreground">Send money using UPI ID</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handlePay} className="space-y-4">
           <div>
             <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
-              <User className="w-4 h-4 text-muted-foreground" /> Recipient Name
+              <AtSign className="w-4 h-4 text-muted-foreground" /> UPI ID
             </label>
-            <input value={form.recipient} onChange={set("recipient")} placeholder="Enter recipient name"
+            <input value={form.upiId} onChange={set("upiId")} placeholder="user@upi"
               className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
-            {errors.recipient && <p className="text-xs text-destructive mt-1">{errors.recipient}</p>}
-          </div>
-          <div>
-            <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
-              <Hash className="w-4 h-4 text-muted-foreground" /> Account Number / UPI
-            </label>
-            <input value={form.accountNumber} onChange={set("accountNumber")} placeholder="Enter account number or UPI ID"
-              className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
-            {errors.accountNumber && <p className="text-xs text-destructive mt-1">{errors.accountNumber}</p>}
+            {errors.upiId && <p className="text-xs text-destructive mt-1">{errors.upiId}</p>}
           </div>
           <div>
             <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
@@ -95,15 +85,13 @@ const SendMoneyContent: React.FC = () => {
             {errors.amount && <p className="text-xs text-destructive mt-1">{errors.amount}</p>}
           </div>
           <div>
-            <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
-              <FileText className="w-4 h-4 text-muted-foreground" /> Description (optional)
-            </label>
-            <textarea value={form.description} onChange={set("description")} placeholder="Add a note..." rows={3}
-              className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none" />
+            <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">Note (optional)</label>
+            <input value={form.note} onChange={set("note")} placeholder="Add a note..."
+              className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
           </div>
           <button type="submit"
             className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-            <SendHorizontal className="w-4 h-4" /> Send Money
+            <Smartphone className="w-4 h-4" /> Pay via UPI
           </button>
         </form>
       </div>
@@ -112,10 +100,10 @@ const SendMoneyContent: React.FC = () => {
   );
 };
 
-const SendMoney = () => (
-  <DashboardLayout title="Send Money">
-    <SendMoneyContent />
+const UpiPayment = () => (
+  <DashboardLayout title="UPI Payment">
+    <UpiPaymentContent />
   </DashboardLayout>
 );
 
-export default SendMoney;
+export default UpiPayment;

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useTransactions } from "@/context/TransactionContext";
-import { Wallet, TrendingUp, TrendingDown, SendHorizontal, Receipt, Landmark, CreditCard, ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, SendHorizontal, Receipt, Landmark, CreditCard, ArrowUpRight, ArrowDownLeft, Smartphone, ScanLine } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -12,17 +12,24 @@ const Dashboard: React.FC = () => {
     { label: "Send Money", icon: SendHorizontal, path: "/send-money" },
     { label: "Pay Bills", icon: Receipt, path: "/pay-bills" },
     { label: "Deposit", icon: Landmark, path: "/deposit" },
-    { label: "Cards", icon: CreditCard, path: "/cards" },
+    { label: "Scan QR", icon: ScanLine, path: "/scan-pay" },
+    { label: "UPI Pay", icon: Smartphone, path: "/upi-payment" },
   ];
 
   const recentTransactions = transactions.slice(0, 5);
+
+  // Monthly spending (sum of debits)
+  const now = new Date();
+  const monthlySpending = transactions
+    .filter((t) => t.type === "debit" && new Date(t.date).getMonth() === now.getMonth())
+    .reduce((s, t) => s + t.amount, 0);
 
   return (
     <div className="space-y-6 animate-fade-in max-w-5xl">
       {/* Welcome */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, User 👋</h2>
+          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, Rahul 👋</h2>
           <p className="text-sm text-muted-foreground">Here's your financial overview</p>
         </div>
       </div>
@@ -31,7 +38,7 @@ const Dashboard: React.FC = () => {
       <div className="rounded-2xl bg-primary p-6 text-primary-foreground">
         <p className="text-sm opacity-80">Total Balance</p>
         <p className="text-4xl font-bold font-display mt-1">₹{totalBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</p>
-        <div className="flex gap-6 mt-4">
+        <div className="flex flex-wrap gap-6 mt-4">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-4 h-4" />
             <span className="text-sm">Income: ₹{totalIncome.toLocaleString("en-IN")}</span>
@@ -40,6 +47,10 @@ const Dashboard: React.FC = () => {
             <TrendingDown className="w-4 h-4" />
             <span className="text-sm">Expenses: ₹{totalExpenses.toLocaleString("en-IN")}</span>
           </div>
+          <div className="flex items-center gap-2">
+            <Wallet className="w-4 h-4" />
+            <span className="text-sm">This Month: ₹{monthlySpending.toLocaleString("en-IN")}</span>
+          </div>
         </div>
       </div>
 
@@ -47,22 +58,19 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="fintech-card">
           <div className="flex items-center gap-2 text-muted-foreground text-sm mb-2">
-            <Wallet className="w-4 h-4" />
-            Total Balance
+            <Wallet className="w-4 h-4" /> Total Balance
           </div>
           <p className="text-2xl font-bold font-display text-foreground">₹{totalBalance.toLocaleString("en-IN")}</p>
         </div>
         <div className="fintech-card">
           <div className="flex items-center gap-2 text-sm mb-2 text-success">
-            <TrendingUp className="w-4 h-4" />
-            Income
+            <TrendingUp className="w-4 h-4" /> Income
           </div>
           <p className="text-2xl font-bold font-display text-foreground">₹{totalIncome.toLocaleString("en-IN")}</p>
         </div>
         <div className="fintech-card">
           <div className="flex items-center gap-2 text-sm mb-2 text-destructive">
-            <TrendingDown className="w-4 h-4" />
-            Expenses
+            <TrendingDown className="w-4 h-4" /> Expenses
           </div>
           <p className="text-2xl font-bold font-display text-foreground">₹{totalExpenses.toLocaleString("en-IN")}</p>
         </div>
@@ -71,7 +79,7 @@ const Dashboard: React.FC = () => {
       {/* Quick Actions */}
       <div className="fintech-card">
         <h3 className="text-base font-semibold text-foreground mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
           {quickActions.map((action) => (
             <button
               key={action.label}
@@ -81,7 +89,7 @@ const Dashboard: React.FC = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <action.icon className="w-5 h-5 text-primary" />
               </div>
-              <span className="text-sm font-medium text-foreground">{action.label}</span>
+              <span className="text-xs font-medium text-foreground">{action.label}</span>
             </button>
           ))}
         </div>
