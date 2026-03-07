@@ -11,6 +11,8 @@ import SendMoney from "./pages/SendMoney";
 import Transactions from "./pages/Transactions";
 import Cards from "./pages/Cards";
 import Settings from "./pages/Settings";
+import Deposit from "./pages/Deposit";
+import PayBills from "./pages/PayBills";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/send-money" element={<SendMoney />} />
+            <Route path="/deposit" element={<Deposit />} />
+            <Route path="/pay-bills" element={<PayBills />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/cards" element={<Cards />} />
             <Route path="/settings" element={<Settings />} />

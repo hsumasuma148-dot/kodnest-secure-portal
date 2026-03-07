@@ -1,4 +1,4 @@
-import { LayoutDashboard, SendHorizontal, ArrowLeftRight, CreditCard, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, SendHorizontal, ArrowLeftRight, CreditCard, Settings, LogOut, Landmark, Receipt } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -17,6 +17,8 @@ import {
 const menuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Send Money", url: "/send-money", icon: SendHorizontal },
+  { title: "Deposit", url: "/deposit", icon: Landmark },
+  { title: "Pay Bills", url: "/pay-bills", icon: Receipt },
   { title: "Transactions", url: "/transactions", icon: ArrowLeftRight },
   { title: "Cards", url: "/cards", icon: CreditCard },
   { title: "Settings", url: "/settings", icon: Settings },
