@@ -39,8 +39,8 @@ const SecurityPinModal: React.FC<Props> = ({ open, onClose, onConfirm }) => {
       setError("Enter all 4 digits");
       return;
     }
-    if (entered !== DEMO_PIN) {
-      setError("Incorrect PIN. Try 1234");
+    if (entered !== STORED_PIN) {
+      setError("Incorrect PIN");
       setPin(["", "", "", ""]);
       document.getElementById("pin-0")?.focus();
       return;
