@@ -95,6 +95,44 @@ const CardsContent: React.FC = () => {
           <div className="flex justify-between"><span className="text-muted-foreground">Status</span><span className={`font-medium ${frozen ? "text-destructive" : "text-success"}`}>{frozen ? "Frozen" : "Active"}</span></div>
         </div>
       </div>
+
+      {/* Change PIN Modal */}
+      {showPinModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20 backdrop-blur-sm animate-fade-in">
+          <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-sm shadow-xl animate-fade-in">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-primary" />
+                <h3 className="text-lg font-semibold text-foreground">Change PIN</h3>
+              </div>
+              <button onClick={() => setShowPinModal(false)} className="p-1 rounded-lg hover:bg-accent transition-colors">
+                <X className="w-4 h-4 text-muted-foreground" />
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">Current PIN</label>
+                <input type="password" inputMode="numeric" maxLength={4} value={currentPin} onChange={(e) => { setCurrentPin(e.target.value.replace(/\D/g, "")); setPinError(""); }}
+                  className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Enter current PIN" />
+              </div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">New PIN</label>
+                <input type="password" inputMode="numeric" maxLength={4} value={newPin} onChange={(e) => { setNewPin(e.target.value.replace(/\D/g, "")); setPinError(""); }}
+                  className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Enter new 4-digit PIN" />
+              </div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">Confirm New PIN</label>
+                <input type="password" inputMode="numeric" maxLength={4} value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, "")); setPinError(""); }}
+                  className="w-full h-11 rounded-lg border border-input bg-background px-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Confirm new PIN" />
+              </div>
+              {pinError && <p className="text-xs text-destructive text-center">{pinError}</p>}
+              <button onClick={handleChangePin} className="w-full h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors mt-2">
+                Update PIN
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
