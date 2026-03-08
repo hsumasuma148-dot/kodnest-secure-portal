@@ -1,7 +1,8 @@
 import React from "react";
 import DashboardLayout from "@/components/DashboardLayout";
-import { CreditCard, Lock, Eye, EyeOff, Snowflake, Unlock } from "lucide-react";
+import { CreditCard, Lock, Eye, EyeOff, Snowflake, Unlock, X, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
+import { useProfile } from "@/context/ProfileContext";
 
 const CardsContent: React.FC = () => {
   const [showNumber, setShowNumber] = React.useState(false);
