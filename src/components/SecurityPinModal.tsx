@@ -7,9 +7,8 @@ interface Props {
   onConfirm: () => void;
 }
 
-const DEMO_PIN = "1234";
-
 const SecurityPinModal: React.FC<Props> = ({ open, onClose, onConfirm }) => {
+  const STORED_PIN = localStorage.getItem("security-pin") || "1234";
   const [pin, setPin] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
 
@@ -40,8 +39,8 @@ const SecurityPinModal: React.FC<Props> = ({ open, onClose, onConfirm }) => {
       setError("Enter all 4 digits");
       return;
     }
-    if (entered !== DEMO_PIN) {
-      setError("Incorrect PIN. Try 1234");
+    if (entered !== STORED_PIN) {
+      setError("Incorrect PIN");
       setPin(["", "", "", ""]);
       document.getElementById("pin-0")?.focus();
       return;
