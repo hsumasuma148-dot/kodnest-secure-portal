@@ -7,9 +7,8 @@ interface Props {
   onConfirm: () => void;
 }
 
-const DEMO_PIN = "1234";
-
 const SecurityPinModal: React.FC<Props> = ({ open, onClose, onConfirm }) => {
+  const STORED_PIN = localStorage.getItem("security-pin") || "1234";
   const [pin, setPin] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
 
