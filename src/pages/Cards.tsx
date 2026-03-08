@@ -55,7 +55,7 @@ const CardsContent: React.FC = () => {
         <div className="flex justify-between items-end">
           <div>
             <p className="text-[10px] opacity-60">CARD HOLDER</p>
-            <p className="text-sm font-medium">RAHUL SHARMA</p>
+            <p className="text-sm font-medium">{profile.name.toUpperCase()}</p>
           </div>
           <div>
             <p className="text-[10px] opacity-60">EXPIRES</p>
