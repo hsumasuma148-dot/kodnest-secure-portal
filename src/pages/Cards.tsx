@@ -88,7 +88,7 @@ const CardsContent: React.FC = () => {
         <h3 className="text-base font-semibold text-foreground mb-4">Card Details</h3>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between"><span className="text-muted-foreground">Card Type</span><span className="font-medium text-foreground">Visa Platinum</span></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Card Holder</span><span className="font-medium text-foreground">Rahul Sharma</span></div>
+          <div className="flex justify-between"><span className="text-muted-foreground">Card Holder</span><span className="font-medium text-foreground">{profile.name}</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Bank</span><span className="font-medium text-foreground">KodNest Banking</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Daily Limit</span><span className="font-medium text-foreground">₹2,00,000</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Monthly Limit</span><span className="font-medium text-foreground">₹10,00,000</span></div>
