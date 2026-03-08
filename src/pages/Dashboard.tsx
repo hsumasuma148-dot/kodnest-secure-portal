@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useTransactions } from "@/context/TransactionContext";
 import { Wallet, TrendingUp, TrendingDown, SendHorizontal, Receipt, Landmark, CreditCard, ArrowUpRight, ArrowDownLeft, Smartphone, ScanLine } from "lucide-react";
+import { useProfile } from "@/context/ProfileContext";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { transactions, totalBalance, totalIncome, totalExpenses } = useTransactions();
+  const { profile } = useProfile();
 
   const quickActions = [
     { label: "Send Money", icon: SendHorizontal, path: "/send-money" },
@@ -29,7 +31,7 @@ const Dashboard: React.FC = () => {
       {/* Welcome */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, Rahul 👋</h2>
+          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, {profile.name.split(" ")[0]} 👋</h2>
           <p className="text-sm text-muted-foreground">Here's your financial overview</p>
         </div>
       </div>
