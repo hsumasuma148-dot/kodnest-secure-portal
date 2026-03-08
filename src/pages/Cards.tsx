@@ -76,7 +76,7 @@ const CardsContent: React.FC = () => {
             {frozen ? <Unlock className="w-5 h-5 text-success" /> : <Snowflake className="w-5 h-5 text-primary" />}
             <span className="text-xs font-medium text-foreground">{frozen ? "Unfreeze" : "Freeze"} Card</span>
           </button>
-          <button className="fintech-card-hover flex flex-col items-center gap-2 p-4">
+          <button onClick={() => { setShowPinModal(true); setPinError(""); }} className="fintech-card-hover flex flex-col items-center gap-2 p-4">
             <Lock className="w-5 h-5 text-primary" />
             <span className="text-xs font-medium text-foreground">Change PIN</span>
           </button>
