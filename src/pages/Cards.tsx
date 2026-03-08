@@ -5,8 +5,26 @@ import { toast } from "sonner";
 import { useProfile } from "@/context/ProfileContext";
 
 const CardsContent: React.FC = () => {
+  const { profile } = useProfile();
   const [showNumber, setShowNumber] = React.useState(false);
   const [frozen, setFrozen] = React.useState(false);
+  const [showPinModal, setShowPinModal] = React.useState(false);
+  const [currentPin, setCurrentPin] = React.useState("");
+  const [newPin, setNewPin] = React.useState("");
+  const [confirmPin, setConfirmPin] = React.useState("");
+  const [pinError, setPinError] = React.useState("");
+
+  const storedPin = localStorage.getItem("security-pin") || "1234";
+
+  const handleChangePin = () => {
+    if (currentPin !== storedPin) { setPinError("Current PIN is incorrect"); return; }
+    if (newPin.length !== 4 || !/^\d{4}$/.test(newPin)) { setPinError("New PIN must be 4 digits"); return; }
+    if (newPin !== confirmPin) { setPinError("PINs do not match"); return; }
+    localStorage.setItem("security-pin", newPin);
+    toast.success("PIN changed successfully");
+    setShowPinModal(false);
+    setCurrentPin(""); setNewPin(""); setConfirmPin(""); setPinError("");
+  };
 
   const toggleFreeze = () => {
     setFrozen(!frozen);
