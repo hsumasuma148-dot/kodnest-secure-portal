@@ -96,7 +96,7 @@ const ProfileContent: React.FC = () => {
               <label className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1.5">
                 <field.icon className="w-4 h-4" /> {field.label}
               </label>
-              {editing && field.key !== "accountNumber" ? (
+              {editing ? (
                 <input
                   value={draft[field.key as keyof typeof draft] || ""}
                   onChange={set(field.key)}
