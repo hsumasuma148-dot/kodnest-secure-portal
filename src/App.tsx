@@ -19,6 +19,7 @@ import UpiPayment from "./pages/UpiPayment";
 import ScanPay from "./pages/ScanPay";
 import Profile from "./pages/Profile";
 import Analytics from "./pages/Analytics";
+import ProfileSetup from "./pages/ProfileSetup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/cards" element={<Cards />} />
+                <Route path="/profile-setup" element={<ProfileSetup />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />

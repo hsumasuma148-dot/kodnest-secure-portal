@@ -9,10 +9,10 @@ interface ProfileData {
 }
 
 const defaultProfile: ProfileData = {
-  name: "Rahul Sharma",
-  email: "rahul.sharma@kodnest.com",
-  phone: "+91 98765 43210",
-  accountNumber: "KODNEST00012345",
+  name: "",
+  email: "",
+  phone: "",
+  accountNumber: "",
   profileImage: null,
 };
 
