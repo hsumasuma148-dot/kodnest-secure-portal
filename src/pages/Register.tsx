@@ -27,7 +27,7 @@ const Register: React.FC = () => {
     setErrors(v);
     if (Object.keys(v).length === 0) {
       toast.success("Account created successfully!");
-      navigate("/dashboard");
+      navigate("/profile-setup");
     }
   };
 
