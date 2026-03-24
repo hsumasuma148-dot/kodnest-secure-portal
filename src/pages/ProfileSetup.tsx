@@ -7,10 +7,10 @@ import FloatingInput from "@/components/FloatingInput";
 import { toast } from "sonner";
 
 const ProfileSetup: React.FC = () => {
-  const [name, setName] = useState("");
+  const { profile, updateProfile } = useProfile();
+  const [name, setName] = useState(profile.name || "");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { updateProfile } = useProfile();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
