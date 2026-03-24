@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import FloatingInput from "@/components/FloatingInput";
 import BankLogo from "@/components/BankLogo";
 import GlassBackground from "@/components/GlassBackground";
+import { useProfile } from "@/context/ProfileContext";
 import { toast } from "sonner";
 
 const Register: React.FC = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
   const navigate = useNavigate();
+  const { updateProfile } = useProfile();
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -26,6 +28,7 @@ const Register: React.FC = () => {
     const v = validate();
     setErrors(v);
     if (Object.keys(v).length === 0) {
+      updateProfile({ name: form.name.trim(), email: form.email.trim() });
       toast.success("Account created successfully!");
       navigate("/profile-setup");
     }
