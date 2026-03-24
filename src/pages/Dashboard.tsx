@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
       {/* Welcome */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, {profile.name.split(" ")[0]} 👋</h2>
+          <h2 className="text-2xl font-bold font-display text-foreground">Welcome back, {(profile.name || "User").split(" ")[0]} 👋</h2>
           <p className="text-sm text-muted-foreground">Here's your financial overview</p>
         </div>
       </div>
